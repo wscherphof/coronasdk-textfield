@@ -1,0 +1,32 @@
+{
+  "name": "coronasdk-textfield",
+  "version": "0.0.1",
+  "description": "Dressed-up native textfields for the Corona SDK",
+  "main": "init.lua",
+  "dependencies": {
+    "lua-events": "~0.0.2-1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wscherphof/coronasdk-textfield.git"
+  },
+  "keywords": [
+    "lua",
+    "lua-loader",
+    "corona",
+    "coronasdk",
+    "textfield",
+    "native",
+    "android",
+    "events",
+    "eventemitter"
+  ],
+  "author": "Wouter Scherphof",
+  "license": "LGPL",
+  "bugs": {
+    "url": "https://github.com/wscherphof/coronasdk-textfield/issues"
+  }
+}
