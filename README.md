@@ -64,7 +64,25 @@ local function loginform (width, sendbutton)
   return group
 end
 ```
-This example shows all of the functions and events in the API, but there are a few more options in `:new ()` (see the code)
+The above example shows most of the functions and events in the API. There are a few more options in `:new ()` (see the code).
+And you could choose interfere with some action when the textfield gets focused, e.g.:
+```lua
+  local function focus (field)
+    if 16 ~= group.y then
+      transition.to(group, {
+        time = 400,
+        transition = easing.outExpo,
+        y = 16,
+        onComplete = function () field:start() end
+      })
+    else
+      field:start()
+    end
+  end
+  uid:on("focus", focus)
+  pwd:on("focus", focus)
+```
+Notice that you then have to call `:start()` to kick off the keyboard input functionality. If there's no listener for the `"focus"` event, the keyboard gets kicked off automatically.
 
 ## Limitations
 - Only styling for [Android](http://developer.android.com/design/building-blocks/text-fields.html) (iOS probably added soonly)

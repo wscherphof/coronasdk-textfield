@@ -1,10 +1,10 @@
 {
   "name": "coronasdk-textfield",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dressed-up native textfields for the Corona SDK",
   "main": "init.lua",
   "dependencies": {
-    "lua-events": "~0.0.2-1"
+    "lua-events": "~0.0.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

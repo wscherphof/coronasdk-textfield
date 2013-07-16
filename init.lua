@@ -71,16 +71,11 @@ function TextField:new (hint, width, options)
     prev = phase
   end
 
-  local function focus ()
-    line:setColor(0, 153, 204)
-    line.width = 2
-    local text = value
-    if options.typeover then text = "" end
-    setvalue(text)
+  local function start () -- called by focus() or :on("focus")
     -- trial and error positioning ftw ;-)
     local left, top = placeholdertext:contentToLocal(placeholdertext.x, placeholdertext.y)
     local textfield = native.newTextField(-1 - left, 4 - top, width, 40)
-    textfield.text = text
+    textfield.text = value
     textfield.font = native.newFont(options.font, options.size)
     textfield.hasBackground = false
     textfield.isSecure = options.isSecure
@@ -89,12 +84,26 @@ function TextField:new (hint, width, options)
     native.setKeyboardFocus(textfield)
   end
 
+  local function focus ()
+    line:setColor(0, 153, 204)
+    line.width = 2
+    local text = value
+    if options.typeover then text = "" end
+    setvalue(text)
+    if 0 == #group:listeners("focus") then
+      start()
+    else
+      group:emit("focus", group) -- listener should call :start()
+    end
+  end
+
   local function touch (event)
     if "ended" == event.phase then focus() end
     return true
   end placeholdertext:addEventListener("touch", touch)
 
   function group:focus () focus() end
+  function group:start () start() end
   function group:value () return value end
   function group:reset () setvalue("") finish() native.setKeyboardFocus(nil) end
 
