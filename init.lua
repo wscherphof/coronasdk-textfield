@@ -21,8 +21,9 @@ function TextField:new (hint, width, options)
   line:setColor(153, 153, 153)
 
   local probe = display.newText(group, "", 0, 0, options.font, options.size)
-  local placeholdertext = display.newText(group, hint, 9, 8,
-    width - 13, probe.contentHeight, options.font, options.size)
+  local placeholdertext = display.newText(group, hint,
+    9, 8, width - 13, probe.contentHeight,
+    options.font, options.size)
   probe:removeSelf() probe = nil
   placeholdertext:setTextColor(153, 153, 153)
 
@@ -41,6 +42,7 @@ function TextField:new (hint, width, options)
     end
   end
 
+  local active
   local function finish ()
     if "" ~= value then
       local text = value
@@ -51,6 +53,7 @@ function TextField:new (hint, width, options)
     placeholdertext.isVisible = true
     line:setColor(153, 153, 153)
     line.width = 1
+    active = false
   end
 
   local prev
@@ -85,6 +88,8 @@ function TextField:new (hint, width, options)
   end
 
   local function focus ()
+    if active then return end
+    active = true
     line:setColor(0, 153, 204)
     line.width = 2
     local text = value
@@ -102,10 +107,28 @@ function TextField:new (hint, width, options)
     return true
   end placeholdertext:addEventListener("touch", touch)
 
-  function group:focus () focus() end
-  function group:start () start() end
-  function group:value () return value end
-  function group:reset () setvalue("") finish() native.setKeyboardFocus(nil) end
+
+  function group:focus ()
+    focus()
+  end
+
+  function group:start ()
+    if not active then
+      print('WARNING - :start() only to be called from :on("focus", listener)')
+      return
+    end
+    start()
+  end
+
+  function group:value ()
+    return value
+  end
+
+  function group:reset ()
+    setvalue("")
+    finish()
+    native.setKeyboardFocus(nil)
+  end
 
   return group
 end

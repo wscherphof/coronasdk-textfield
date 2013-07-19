@@ -1,6 +1,6 @@
 {
   "name": "coronasdk-textfield",
-  "version": "0.0.2",
+  "version": "0.0.2-1",
   "description": "Dressed-up native textfields for the Corona SDK",
   "main": "init.lua",
   "dependencies": {
